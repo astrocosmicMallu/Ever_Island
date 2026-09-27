@@ -1,0 +1,15 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ args: ['--use-gl=swiftshader', '--no-sandbox'] });
+const page = await b.newPage({ viewport: { width: 640, height: 360 } });
+await page.goto('http://127.0.0.1:8000/?test=1', { waitUntil: 'load', timeout: 60000 });
+await page.waitForFunction(() => window.__booted === true && window.forestDiagnostics?.()?.texturesReady, null, { timeout: 240000 });
+await page.evaluate(() => { simTest.start(); simTest.day(); });
+await page.waitForTimeout(3000);
+const f0 = await page.evaluate(() => window.forestDiagnostics().frames);
+const t0 = Date.now();
+await page.waitForTimeout(10000);
+const f1 = await page.evaluate(() => window.forestDiagnostics().frames);
+console.log(`frames=${f1 - f0} elapsed=${((Date.now() - t0) / 1000).toFixed(1)}s fps=${((f1 - f0) / ((Date.now() - t0) / 1000)).toFixed(2)}`);
+const dc = await page.evaluate(() => ({ calls: window.forestDiagnostics().drawCalls, tris: window.forestDiagnostics().triangles }));
+console.log('drawCalls=' + dc.calls + ' triangles=' + dc.tris);
+await b.close();

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1b2c29"><title>Everwild — Four Seasons</title><link rel="stylesheet" href="./styles.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
+<script>
+window.__bootErrors = [];
+window.__booted = false;
+function __showBootError(title, detail) {
+  var l = document.getElementById("loading");
+  if (!l) return;
+  l.innerHTML = "<span>" + "&#9888;" + "</span><p>" + title + "<br><small>" +
+    String(detail || "").slice(0, 300) + "</small></p>" +
+    "<p><small>If this persists: hard-refresh (Ctrl+Shift+R) and open the running preview server, not the file directly.</small></p>";
+}
+window.addEventListener("error", function (e) {
+  var t = e && e.target;
+  var isResource = t && (t.src || t.href) && t !== window;
+  var msg;
+  if (isResource) { msg = "Could not load: " + (t.src || t.href); }
+  else { msg = (e && e.message) || "unknown error";
+    if (e && e.filename) msg += " @ " + e.filename.split("/").pop() + ":" + (e.lineno || "?"); }
+  window.__bootErrors.push(msg);
+  __showBootError("Something failed to start.", msg);
+}, true);
+window.addEventListener("unhandledrejection", function (e) {
+  var r = e && e.reason;
+  window.__bootErrors.push((r && (r.stack || r.message)) || String(r));
+  __showBootError("Something failed to start.", window.__bootErrors[window.__bootErrors.length - 1]);
+});
+if (location.protocol === "file:") {
+  __showBootError("Please use the preview server.", "This world must be served over http (modules are blocked on file://). Open the live preview panel instead of this file.");
+} else {
+  setTimeout(function () {
+    if (!window.__booted && !window.__bootErrors.length) {
+      __showBootError("Still loading after 30s.", "A module may be downloading slowly. Check your connection, then hard-refresh (Ctrl+Shift+R).");
+    }
+  }, 30000);
+}
+</script></head>
+<body class="landing">
+<div id="world" aria-label="Interactive woodland simulation"></div><div class="vignette"></div>
+<header class="brand"><span class="brand-mark">♧</span><div>EVERWILD<small>LIFE IN THE NORTH WOODS</small></div></header>
+<div id="ui" class="flex items-center gap-2"><button id="tg" title="Toggle terrain grid">Grid</button><button id="tp">Pause time</button><button id="tel">Wander · F</button><button id="cur">Settings · Tab</button></div>
+<div id="clock">07:26<br>Day 1</div>
+<div id="compass"><div id="compassCenter"></div><div class="card" id="cN">N</div><div class="card" id="cE">E</div><div class="card" id="cS">S</div><div class="card" id="cW">W</div></div>
+<div id="bagInfo"><span class="eyebrow">YOUR DAY, AT YOUR PACE</span><div><span id="equipmentLabel">Hands free</span><span class="fish-count">Fish <b id="bagCount">0</b></span></div><p id="grillStatus">Ready at dusk</p><p id="basketLine">Basket <b id="basketCount">0</b> <span>E to forage</span></p></div>
+<aside id="mapPanel"><div class="map-heading"><span class="eyebrow">NORTH WOODS</span><span>↗</span></div><canvas id="minimap" width="160" height="160" title="Click to enlarge the map" aria-label="Live map with pond, garden, cabins and campfire"></canvas><div class="map-meta"><span id="biomeLabel">WOODLAND</span><span>800 × 800 m</span></div></aside>
+<div id="crosshair"></div><div id="diveTint"></div><div id="toast" role="status"></div><div id="bitePopup" role="alert"></div><div id="npcCallout"></div><div id="sitPrompt">N · Sit by the fire</div>
+<div id="contextHint">Follow the compass to the pond, garden, cabins or fire.</div>
+<div id="hint"><span><kbd>WASD</kbd> Walk</span><span><kbd>SHIFT</kbd> Run</span><span><kbd>SPACE</kbd> Jump</span><span><kbd>T</kbd> Torch</span><span><kbd>G</kbd> Field guide</span></div>
+<footer><div><i></i><span id="weatherLabel">STEADY RAIN</span><span class="divider">/</span><span id="seasonLabel">Spring</span></div><div class="flex gap-5 items-center"><button id="mut">Sound on · M</button><button id="quietButton">Quiet view · H</button><button id="fullScreen" title="Fullscreen" aria-label="Fullscreen">⛶</button></div></footer>
+<section id="overlay">
+ <div class="chapter"><span>01 / NORTH WOODS</span><span>A LIVING WORLD. NOT A CHECKLIST.</span></div>
+ <div class="welcome-copy"><span class="eyebrow warm">RAIN ON THE ROOF. LIFE ALL AROUND.</span><h1>A little further<br><em>from everything.</em></h1><p>Cast a line. Tend a garden. Share a fire.<br>Make yourself at home in a world that keeps on living.</p><div class="welcome-actions"><button id="startGame" class="primary">Step into the woods <span>↗</span></button><button id="loadGame" class="text-button">Load saved game <span>↗</span></button><button id="guideButton" class="text-button">Read the field guide <span>↗</span></button></div><div class="welcome-note">HEADPHONES RECOMMENDED <span>·</span> KEYBOARD & MOUSE</div></div>
+ <aside class="welcome-side"><span class="eyebrow">A SLOWER KIND OF DAY</span><div><b>01</b><p>By the water<small>Find a quiet spot. Wait for a bite.</small></p></div><div><b>02</b><p>Among the flowers<small>Borrow a pot. Help something grow.</small></p></div><div><b>03</b><p>When the light fades<small>Bring your catch to the fire.</small></p></div><span class="side-caption">THE ORIGINAL SIMULATION,<br>IN A RAIN-SOAKED WORLD.</span></aside>
+</section>
+<div id="menu" class="hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+ <div class="box"><div class="dialog-heading"><span class="eyebrow">MAKE YOURSELF AT HOME</span><button id="settingsClose" aria-label="Close settings">×</button></div><h2 id="settingsTitle">Your world. Your pace.</h2>
+ <div class="settings-grid"><section><h3>THE WORLD</h3>
+ <label>Day duration <input type="range" id="mDay" min="20" max="300" step="5" value="240"><span class="val" id="mDayV">240s</span></label>
+ <label>Time of day <input type="range" id="mTime" min="0" max="23.9" step="0.1" value="7.4"><span class="val" id="mTimeV">7.4h</span></label>
+ <label>Season cycle<select id="mSeasMode"><option value="auto">Automatic</option><option value="manual">Manual</option></select></label>
+ <div class="season-switch"><button data-season="0">Spring</button><button data-season="1">Summer</button><button data-season="2">Autumn</button><button data-season="3">Winter</button></div><label id="mSeasRow" style="display:none">Season <input type="range" id="mSeas" min="0" max="3.99" step="0.01" value="0"><span class="val" id="mSeasV">Spring</span></label>
+ <label>Weather<select id="mWeather"><option value="auto">Automatic · seasonal</option><option value="clear">Clear skies</option><option value="cloudy">Overcast</option><option value="fog">Low mist</option><option value="rain">Showers</option><option value="storm">Thunderstorm</option><option value="snow">Snowfall · winter</option></select></label><p id="weatherHelp" class="muted-note">Weather changes naturally with the season.</p><label>Precipitation <input id="mRain" type="range" min="0" max="1" step="0.05" value="0.85"><span id="mRainV" class="val">85%</span></label>
+ <label>Mist <input type="range" id="mFog" min="0" max="0.025" step="0.0005" value="0.009"><span class="val" id="mFogV">0.0090</span></label>
+ </section><section><h3>THE EXPERIENCE</h3>
+ <label>Ambient volume <input type="range" id="mVol" min="0" max="1" step="0.05" value="0.6"><span class="val" id="mVolV">0.60</span></label>
+ <label>Look sensitivity<input type="range" id="mSensitivity" min="0.2" max="2" step="0.1" value="0.7"></label>
+ <label>Render detail<select id="mQuality"><option value="1.25">Balanced</option><option value="1.5">High</option><option value="0.75">Performance</option></select></label>
+ <p class="muted-note">M mutes all sound. H hides the interface.<br>Escape releases the mouse. Tab opens this menu.<br>Catch progress is saved on this device.</p>
+ <h3 class="travel-title">TAKE ME TO</h3><div class="travel-buttons"><button data-travel="pond">Pond ↗</button><button data-travel="garden">Garden ↗</button><button data-travel="camp">Campfire ↗</button><button data-travel="cabin">Cabin ↗</button><button data-travel="workshop">Workshop ↗</button><button data-travel="trailhead">Campsite ↗</button></div>
+ </section></div>
+ <details id="controlsGuide"><summary>FIELD GUIDE <span>Every tool. Every little possibility. +</span></summary><div class="guide-grid"><article><h4>Walk & explore</h4><p>WASD to move, Shift to run, Space to jump. T lights your torch. F teleports to a random safe spot. The compass and map track points of interest. Cabins have sliding doors, furnished rooms and accessible upper floors.</p></article><article><h4>Cast & catch</h4><p>Go within 6 m of the pond or a riverbank. Press O to equip the rod, face the water and click to cast. When the bite prompt appears, press I within 2 seconds. O stows the rod.</p></article><article><h4>Water & grow</h4><p>Find the gardener near the flower beds during the day. Get close and press P to borrow the pot. Hold the left mouse button to pour onto the bed and watch the flowers bloom. Press P again to return it. Stow your rod first.</p></article><article><h4>Fire & friendship</h4><p>N sits in an empty chair; N again stands up. At night, come within 3 m of the fire and press Shift + O to grill up to 6 fish. They cook for 6 seconds, then your neighbors share the meal.</p></article><article><h4>A living woodland</h4><p>The gardener tends plants; the worker types at their desk. At dusk they come to the fire, sit and chat. Monkeys perch, swing and visit the ground. Seasons change foliage and snow; the sky carries the sun, moon, stars and constellations.</p></article><article><h4>Your own rhythm</h4><p>Pause time without stopping exploration. Change day length, seasons, weather and time here. Winter brings snow-covered terrain and snowfall; autumn has falling leaves and a leaf-covered forest floor. Spring blooms with cherry blossoms and flowers. Choose automatic weather or clear skies, clouds, fog, showers and thunderstorms. All audio is local: positional river and fire sounds, surface-aware footsteps, birds, wind, splashes, door movement and thunder. Click the map to enlarge it.</p></article></div></details>
+ <button id="mResume" class="primary">Back to the woods <span>↗</span></button><p class="credits">Textures: Poly Haven · CC0. Head scan © I-R Entertainment Ltd., Lee Perry-Smith / Infinite-Realities · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a>, via Three.js; cropped and rescaled. Original simulation: your sim1.html.</p>
+ </div>
+</div>
+<div id="vitals"><div class="vb"><span>❤️</span><div class="track"><div id="vHp" class="fill hp"></div></div></div><div class="vb"><span>🍖</span><div class="track"><div id="vHun" class="fill hun"></div></div></div><div class="vb"><span>💧</span><div class="track"><div id="vThi" class="fill thi"></div></div></div><div class="vb"><span>🌡️</span><div class="track"><div id="vTmp" class="fill tmp"></div></div></div></div>
+<button id="packToggle">🎒</button>
+<aside id="pack"><h3>BACKPACK <small>B</small></h3><div id="packList"></div><div id="stockList"></div><p class="pkHint">Click food to eat · raw food poisons</p></aside>
+<aside id="quests"><h3>CHALLENGES</h3><div id="questList"></div></aside>
+<div id="workshop"></div><div id="dmg"></div>
+<div id="loading"><span>♧</span><strong>EVERWILD</strong><p>A little world is waking up…</p></div>
+<script type="module" src="./app.js?v=20260927-full"></script></body></html>

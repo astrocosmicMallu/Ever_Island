@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox', '--no-sandbox'] });
+const page = await browser.newPage({ viewport: { width: 640, height: 400 } });
+const errors = [], failed = [];
+page.on('pageerror', e => errors.push('pageerror: ' + e.message));
+page.on('console', m => { if (m.type() === 'error') errors.push('console: ' + m.text()); });
+page.on('response', r => { if (r.status() >= 400) failed.push(r.url() + ' :: ' + r.status()); });
+await page.goto('http://127.0.0.1:8000/', { waitUntil: 'load', timeout: 60000 });
+await page.waitForFunction(() => window.__booted === true && window.forestDiagnostics?.()?.texturesReady, null, { timeout: 240000 });
+const d = await page.evaluate(() => window.forestDiagnostics());
+console.log('BOOTED | trees:', d.trees, 'cabins:', d.cabins, 'grid:', d.grid, 'bootErrors:', await page.evaluate(() => window.__bootErrors.length));
+console.log('ERRORS:', JSON.stringify(errors), 'FAILED:', JSON.stringify(failed));
+console.log(errors.length === 0 && failed.length === 0 ? 'QUICK: PASS' : 'QUICK: FAIL');
+await browser.close();

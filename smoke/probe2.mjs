@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox', '--no-sandbox'] });
+const page = await browser.newPage({ viewport: { width: 640, height: 400 } });
+page.on('pageerror', e => console.log('PAGEERROR:', e.message.slice(0, 200)));
+await page.goto('http://127.0.0.1:8000/?test=1', { waitUntil: 'load', timeout: 60000 });
+await page.waitForFunction(() => window.__booted === true && window.forestDiagnostics?.()?.texturesReady, null, { timeout: 240000 });
+await page.evaluate(() => { window.simTest.start(); window.simTest.pauseRender(true); });
+await page.evaluate(() => window.simTest.night());
+await page.waitForTimeout(3000);
+const s = await page.evaluate(() => ({ npc: window.simTest.surv().npcs, night: window.forestDiagnostics().night, tmp: window.simTest.surv().tmp, season: window.forestDiagnostics().season }));
+console.log(JSON.stringify(s));
+await browser.close();

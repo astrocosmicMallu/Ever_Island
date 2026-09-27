@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#172c25"><title>Everwild — A little closer to nature</title></head>
+<body>
+<main id="world" aria-label="Interactive 3D forest"></main>
+<div class="vignette"></div>
+<div id="interface">
+<header class="flex items-center justify-between">
+<a class="brand flex items-center gap-3" href="./" aria-label="Everwild home"><span class="brand-icon">♧</span><span>everwild<span class="brand-sub">A LITTLE CLOSER TO NATURE</span></span></a>
+<div class="compass hidden md:flex"><span>W</span><i></i><span id="bearing">N</span><i></i><span>E</span><b>▾</b></div>
+<div class="flex items-center gap-5"><span class="live hidden sm:block"><i></i> LIVE EXPLORATION</span><button class="icon-button" id="settings" title="Forest settings" aria-label="Forest settings">⚙</button></div>
+</header>
+<aside class="location"><span class="eyebrow">A PLACE OUTSIDE OF TIME</span><div class="flex items-center gap-2"><span class="location-pin">⌖</span> Mosswood Forest <span class="tag">01</span></div><p>North woods · 06:18 AM</p></aside>
+<section id="welcome">
+<div class="eyebrow light"><span class="tiny-line"></span> RAIN ON CANVAS. EARTH UNDERFOOT.</div>
+<h1>Stay a little.<br><em>Let it rain.</em></h1>
+<p>Somewhere past the last road, the world slows down.<br>A quiet camp. An unfamiliar trail. Just you and the rain.</p>
+<div class="flex items-center gap-4 mt-7"><button id="enter" class="primary">Leave the campsite <span>↗</span></button><span class="entry-note">HEADPHONES ON.<br>WORLD OFF.</span></div>
+<div class="welcome-controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to move</span><span><svg width="14" height="19" viewBox="0 0 14 19" fill="none"><rect x="1" y="1" width="12" height="17" rx="6" stroke="currentColor"/><path d="M7 1v6" stroke="currentColor"/></svg> Mouse to look</span><span><kbd>ESC</kbd> to pause</span></div>
+</section>
+<div id="playing" hidden><span class="eyebrow">TAKE THE LONG WAY HOME</span><p id="explore-message">Follow the trail. Or make your own.</p></div>
+<div id="crosshair" hidden></div>
+<aside class="field-panel">
+<div class="panel-top flex justify-between items-center"><span class="eyebrow">YOUR SURROUNDINGS</span><span class="small-leaf">❧</span></div>
+<div class="weather flex items-center gap-3"><span class="sun-icon">╱╱╱</span><div><strong>Steady rain</strong><p>11° C <span>·</span> North woods <span>·</span> 06:18 AM</p></div></div>
+<div class="panel-rule"></div>
+<div class="flex items-center justify-between mb-3"><span class="eyebrow">THE WOODLAND</span><button id="map-toggle" class="text-button" aria-label="Expand woodland map">↗</button></div>
+<div class="map-wrap" id="map-wrap"><canvas id="map" width="520" height="290" aria-label="Live map of the forest"></canvas><span class="map-n">N ↑</span><span class="map-caption">MOSSWOOD RESERVE</span></div>
+<div class="map-footer flex justify-between"><span><i class="mint-dot"></i> You are here</span><span>600 × 600 m</span></div>
+<button id="journal" class="journal-button flex justify-between items-center"><span>♧ &nbsp; Field notes <small id="discovery-count">0 / 3 discovered</small></span><span>→</span></button>
+</aside>
+<footer class="flex justify-between items-center"><div class="flex items-center gap-5"><span class="forest-state"><i></i> NORTH WOODS / A RAINY MORNING</span><span class="footer-divider hidden sm:block"></span><span class="hidden sm:block">An unhurried journey.</span></div><div class="flex items-center gap-5"><button id="sound" class="footer-button" aria-label="Toggle ambient sound">♫ <span>Sound off</span></button><button id="photo" class="footer-button" title="Hide interface (H)">⌗ <span class="hidden sm:inline">Quiet view</span></button><button id="fullscreen" class="footer-button" title="Fullscreen">⛶</button></div></footer>
+</div>
+<div id="toast" role="status"></div>
+<dialog id="settings-dialog"><div class="dialog-heading"><span class="eyebrow">MAKE YOURSELF AT HOME</span><button class="close" aria-label="Close">×</button></div><h2>Your forest, your pace.</h2><label>Look sensitivity <input id="sensitivity" type="range" min="0.2" max="2" step="0.1" value="0.7"></label><label>Ambient volume <input id="volume" type="range" min="0" max="1" step="0.01" value="0.35"></label><label>Render quality <select id="quality"><option value="1">Balanced</option><option value="1.5">High</option><option value="0.75">Performance</option></select></label><p>WASD / arrows to walk · Shift to run<br>Mouse to look · Esc to pause · H for a quiet view<br>M to expand the map · Stay near a landmark to discover it.</p><p class="audio-credit">Forest recording: <a href="https://archive.org/details/aporee_41252_47068" target="_blank" rel="noopener noreferrer">maciej janasik / radio aporee ↗</a><br>Public Domain Mark 1.0 · Local wind &amp; birds fallback</p><button id="reset" class="secondary">Return to the trailhead ↗</button></dialog>
+<dialog id="journal-dialog"><div class="dialog-heading"><span class="eyebrow">MOSSWOOD FIELD NOTES</span><button class="close" aria-label="Close">×</button></div><h2>A forest full of little things.</h2><p>Wander close to the markers on your map. Some things are worth slowing down for.</p><div id="notes"></div><span class="save-note">Your discoveries are saved on this device.</span></dialog>
+<div id="loading"><span class="brand-icon">♧</span><p>Rain is moving through the trees…</p></div>
+<script type="module" src="/app.js"></script>
+</body></html>

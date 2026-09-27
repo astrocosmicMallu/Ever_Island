@@ -1,2 +1,2 @@
-# Ever_Island
-A new survival web based realistic game
+# EverWood
+A new sim world 
