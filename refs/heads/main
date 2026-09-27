@@ -1,0 +1,8 @@
+0000000000000000000000000000000000000000 2e7119e65d94b756173985dfc0b4a3e02d7bd4d0 user <user@e2b.local> 1790485370 +0000	clone: from https://github.com/astrocosmicMallu/EverWood.git
+2e7119e65d94b756173985dfc0b4a3e02d7bd4d0 0c242ee563993c251c35af4d67745c7674dc596b EverWood Fix <fix@local> 1790487657 +0000	commit: Working no-build woodland fix + placeholder engine + vendored three.js
+0c242ee563993c251c35af4d67745c7674dc596b ddd6ca1c4872559f17ba23abf93f085109ccb93c EverWood Fix <fix@local> 1790488728 +0000	commit: Restore full EverWood (four-seasons) at root: reconstruct navigation/botanical/forest/ecology, no-build port, grid off by default
+ddd6ca1c4872559f17ba23abf93f085109ccb93c 175457b17c6fb7e019d456688d262587317979f1 Arena Builder <builder@arena.local> 1790496474 +0000	commit: Wildlife: deer herd + bird flock + foraging, verified 5/5 PASS
+175457b17c6fb7e019d456688d262587317979f1 b310a86919644326449b5073a63b151b15b9504c Arena Builder <builder@arena.local> 1790509726 +0000	commit: Living Realism: ice, grassland, canopy leaves, fish, swim, NPC minds, fireflies
+b310a86919644326449b5073a63b151b15b9504c bd3f8e86ea46e01f8bf76197040c881fddd3db69 Arena Builder <builder@arena.local> 1790511643 +0000	commit: Fix leaf fall direction, textured ice, touch ripples, visible fish
+bd3f8e86ea46e01f8bf76197040c881fddd3db69 6983f7b06b36c999030fdab3feedf0e95ddae918 Arena Builder <builder@arena.local> 1790513432 +0000	commit: More animals: fox GLB + rabbits, squirrels, frogs; wild 6/6 PASS
+6983f7b06b36c999030fdab3feedf0e95ddae918 493eb4dbbfa2564443a7fbfcba6b493a52523624 Arena Agent <agent@arena.local> 1790518009 +0000	commit: Survival overhaul: vitals, backpack, workshop, cooking, farming, NPC jobs, wolves, horse, spear, turrets, walls, quests, saves; surv 7/7 PASS
